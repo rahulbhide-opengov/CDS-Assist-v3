@@ -1,0 +1,17 @@
+{
+  "name": "@cds-assist/shared",
+  "version": "1.0.0",
+  "description": "CDS-Assist shared design tokens, types, engine, and validation utilities.",
+  "type": "module",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./tokens": "./tokens/index.ts",
+    "./types": "./types/index.ts",
+    "./engine": "./engine/index.ts",
+    "./domains/*": "./domains/*.ts",
+    "./validation/*": "./validation/*.ts"
+  }
+}

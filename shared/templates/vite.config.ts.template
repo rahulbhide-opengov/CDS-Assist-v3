@@ -1,0 +1,40 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    target: 'esnext',
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-mui-core': ['@mui/material', '@mui/system'],
+          'vendor-mui-icons': ['@mui/icons-material'],
+          'vendor-opengov': [
+            '@opengov/components-page-header',
+            '@opengov/components-nav-bar',
+          ],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    sourcemap: false,
+    reportCompressedSize: false,
+  },
+  optimizeDeps: {
+    include: [
+      '@mui/material',
+      '@mui/icons-material',
+      '@emotion/react',
+      '@emotion/styled',
+      'react',
+      'react-dom',
+      'react-router-dom',
+    ],
+  },
+  server: {
+    hmr: { overlay: false },
+  },
+});

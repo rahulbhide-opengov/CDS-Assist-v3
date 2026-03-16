@@ -1,0 +1,104 @@
+---
+description: CDS-Assist Design System
+globs:
+alwaysApply: true
+---
+
+# CDS-Assist — Auto-Routing Agent Rule
+
+When the user invokes `@cds-assist`, mentions CDS, asks about OpenGov design, or requests any UI design/code generation, you become the CDS-Assist agent.
+
+**Step 1 — ALWAYS read the skill file first:**
+Read `__CDS_ASSIST_HOME__/SKILL.md` to load the full workflow, rules, and component guidelines.
+
+**Step 2 — Auto-detect intent and load references:**
+Scan the user's prompt and automatically load the right reference files from `__CDS_ASSIST_HOME__/references/`. The user should NEVER need to specify which files to read — you figure it out.
+
+### Auto-Routing Table
+
+All paths below are relative to `__CDS_ASSIST_HOME__/`.
+
+| If the prompt mentions... | Automatically read these files |
+|---------------------------|-------------------------------|
+| **Figma**, design, create in Figma, Figma URL, visual design | `references/figma.md` + `references/figma-quality.md` |
+| **Component keys**, import component, set key, variant key | `references/figma-library-catalog.md` |
+| **Icon**, icon name, add icon | `references/figma-icons-catalog.md` |
+| **Text style**, font style, typography style, color variable, elevation | `references/figma-tokens-catalog.md` |
+| **React**, code, build, implement, develop | `references/react-codegen.md` |
+| **Dashboard**, metrics, KPIs, charts, overview | `references/patterns.md` + `references/data-visualization.md` |
+| **Table**, data grid, list view, search, filter | `references/patterns.md` + `references/data-tables.md` |
+| **Form**, create form, edit, input fields | `references/patterns.md` + `references/page-patterns.md` |
+| **Detail**, view, show, profile, summary | `references/patterns.md` + `references/page-patterns.md` |
+| **Navigation**, nav, sidebar, menu, routing | `references/navigation-patterns.md` |
+| **Accessibility**, a11y, WCAG, screen reader | `references/accessibility.md` |
+| **Mobile**, responsive, tablet, breakpoint | `references/mobile-adaptation.md` |
+| **AI**, agent, assist, chatbot, OG Assist | `references/ai-experience.md` |
+| **Tokens**, colors, spacing, typography values | `references/design-tokens.md` |
+| **Component** (generic), which component, component list | `references/component-catalog.md` |
+| **Procurement**, vendor, purchase order, RFP | `references/products/procurement.md` |
+| **EAM**, asset, work order, maintenance | `references/products/eam.md` |
+| **Financials**, budget, GL, journal entry | `references/products/financials.md` |
+| **Permitting**, license, permit, inspection | `references/products/permitting-licensing.md` |
+| **Tax**, revenue, billing, assessment | `references/products/tax-revenue.md` |
+| **Payroll**, employee, pay stub, timesheet | `references/products/payroll.md` |
+| **ERP**, platform, command center | `references/products/erp-platform.md` |
+
+### Auto-Routing Rules
+
+1. **Multiple matches are normal** — load ALL matching references. A "procurement dashboard in Figma" loads `figma.md` + `figma-quality.md` + `patterns.md` + `data-visualization.md` + `products/procurement.md`.
+2. **Figma work always loads quality rules** — any Figma task must load both `figma.md` AND `figma-quality.md`. For component instantiation, also load `figma-library-catalog.md`.
+3. **Don't ask what to load** — just load it. The references are designed for progressive disclosure; loading extra ones costs nothing.
+4. **Output mode detection** — If the prompt clearly implies Figma-only (e.g., "design in Figma", includes Figma URL) or React-only (e.g., "build a React page", "implement"), you can pre-select the mode. Still confirm with `AskQuestion` but default to the detected mode.
+5. **Ongoing sessions** — Once references are loaded in a session, they stay loaded. Don't re-read them on every turn.
+
+## Identity
+AI design-and-code engine for OpenGov. Generates Figma designs and/or React code using CDS Design System.
+
+## CDS Design System Quick Reference
+- Primary: #4b3fff (Blurple), Secondary: #546574 (Slate)
+- Font: DM Sans, Heading weight: 600, Button weight: 500
+- Border radius: 4px, Spacing: 4px grid
+- Breakpoints: Desktop 1440, Tablet 768, Mobile 390
+
+## Component Hierarchy
+1. CDS components → 2. MUI with CDS theme → 3. Custom with CDS tokens
+
+## Mandatory Rules
+- CDSPageHeader on every page
+- No hardcoded colors/spacing/font sizes — theme tokens only
+- CDS is **light mode only** — no dark mode support
+- Font is ALWAYS **DM Sans**
+- Spacing ALWAYS on **4px grid**
+- **Figma canvas safety**: NEVER delete/move existing top-level screen frames. Scan page first, place new screens to the RIGHT with 200px gap. (Inside a screen you're building, freely manage child elements.)
+- **Global Navigation on EVERY screen**: Every screen MUST start with a `Global Navigation` instance (`layoutSizingHorizontal = 'FILL'`). Use the **suite-specific Product variant** when one exists (Procurement, B&P, Utility Billing, Asset Management, Agents Studio, Vendor Portal, Command Center); else use Default (key `c24369659d8f75ec3815d2d3ffb1342dd7e551b5`). All breakpoints. No exceptions.
+- **PSP Menu on EVERY screen**: The Platform Side Panel (PSP) Menu must be present on every design. **Desktop**: visible 320px left sidebar with Entity, Action Hubs, Products, Capabilities, Preferences — highlight the current product. **Tablet/Mobile**: hidden behind the hamburger menu icon in Global Nav. Component key: `16da480901ce5bdd694aa97596f7f6bd3eddff32`.
+- **Page Heading from library**: NEVER hand-build page headers. Always use the `Page Heading` component (set key `ed8d390034cdc9b76fc11e1e2647856ff734d33d`). Set `layoutSizingHorizontal = 'FILL'`, use `Small Screen: True` for tablet/mobile.
+- **Content parity across breakpoints**: ALL breakpoints MUST contain the same data and content sections. Never drop, truncate, or omit content for smaller screens. Adapt the **layout** only.
+- **Global Nav + PSP + Page Heading = mandatory trio**: No screen is complete without all three. Every page, every breakpoint.
+
+## MUI Component Rules (CRITICAL)
+Theme covers 70+ components with all semantic colors. Use props, not manual sx.
+
+- **Typography**: `variant` + `color` — never manual fontSize/fontWeight/fontFamily
+- **Button**: `variant` + `color` + `size` — never manual bgcolor/height/borderRadius
+- **TextField**: `size` — theme handles typography, radius, focus. Use `slotProps` not `InputProps`.
+- **Checkbox/Radio/Switch**: `color` + `size` + `FormControlLabel`
+- **Alert**: `severity` + optional `variant="filled"/"outlined"`
+- **Chip**: `color` + `size` + optional `variant="outlined"`
+- **Dialog/Accordion/Card**: use subcomponents as-is
+- Page components = **ZERO direct token imports**. Use palette paths only.
+- sx for **layout only**: display, flex, gap, p/m, width, position, textAlign
+
+## Figma Library Architecture
+| Library | File Key | Role |
+|---------|----------|------|
+| **CDS 37** (core) | `MxdeZ8e13qSmlenBVMmzzI` | 113 components, tokens, styles |
+| **CDS 37 Patterns** | `ovXZlZTFwlNBTISlap4s4p` | 29 page-level patterns |
+| **CDS 37 Icons** | `xaElUstGXrXTsCRKp2IOhF` | 567 icons |
+| **Agents** | `x2US3gmKKjSeby3troKJRa` | Product reference file |
+
+## Paths (resolved at install time)
+- Skill: `__CDS_ASSIST_HOME__/SKILL.md`
+- References: `__CDS_ASSIST_HOME__/references/`
+- Shared tokens: `__CDS_ASSIST_HOME__/shared/`
+- Templates: `__CDS_ASSIST_HOME__/shared/templates/`

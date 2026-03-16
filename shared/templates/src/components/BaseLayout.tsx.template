@@ -1,0 +1,132 @@
+import React from 'react';
+import { Box } from '@mui/material';
+import { capitalDesignTokens } from '@opengov/capital-mui-theme';
+import type { IMenuOption } from '../config/navBarTypes';
+
+export interface SearchFilterOption {
+  value: string;
+  label: string;
+  Icon: any;
+}
+
+export interface SearchSuggestion {
+  title: string;
+  type: string;
+  id: string;
+  url: string;
+}
+
+export interface SearchConfig {
+  filterOptions: SearchFilterOption[];
+  suggestions: SearchSuggestion[];
+}
+
+export interface BaseLayoutConfig {
+  appName: string;
+  menuOptions: IMenuOption[];
+  favoritesData?: any[];
+  searchConfig?: SearchConfig;
+}
+
+export interface BaseLayoutProps {
+  children: React.ReactNode;
+  config: BaseLayoutConfig;
+  maxContentWidth?: number | string | 'none';
+}
+
+export function BaseLayout({ children, config, maxContentWidth }: BaseLayoutProps) {
+  return (
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      {/* Skip to main content link for keyboard/screen reader users */}
+      <Box
+        component="a"
+        href="#main-content"
+        onClick={(e: React.MouseEvent) => {
+          e.preventDefault();
+          document.getElementById('main-content')?.focus();
+        }}
+        sx={{
+          position: 'absolute',
+          left: '-9999px',
+          zIndex: 9999,
+          '&:focus': {
+            position: 'fixed',
+            top: 8,
+            left: 8,
+            p: 1.5,
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            outline: '2px solid',
+            outlineColor: 'primary.main',
+            outlineOffset: 2,
+            borderRadius: 1,
+            fontWeight: 600,
+            textDecoration: 'none',
+          },
+        }}
+      >
+        Skip to main content
+      </Box>
+
+      {/* Suite Navigation Bar */}
+      <Box
+        component="nav"
+        aria-label="Suite navigation"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          height: 48,
+          px: 2,
+          gap: 0.5,
+          bgcolor: 'background.paper',
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}
+      >
+        <Box
+          component="span"
+          sx={{ fontWeight: 600, color: 'primary.main', fontSize: '1rem', mr: 2 }}
+        >
+          {config.appName}
+        </Box>
+        {config.menuOptions.map((option) => (
+          <Box
+            key={option.id}
+            component="a"
+            href={option.url || '#'}
+            sx={{
+              px: 1.5,
+              py: 0.75,
+              borderRadius: 1,
+              textDecoration: 'none',
+              color: option.isActive ? 'primary.main' : 'text.secondary',
+              fontWeight: option.isActive ? 600 : 400,
+              fontSize: '0.875rem',
+              '&:hover': { bgcolor: 'action.hover' },
+            }}
+          >
+            {option.label}
+          </Box>
+        ))}
+      </Box>
+
+      {/* Main content area */}
+      <Box
+        component="main"
+        id="main-content"
+        tabIndex={-1}
+        sx={{
+          maxWidth:
+            maxContentWidth === 'none'
+              ? 'none'
+              : (maxContentWidth ??
+                capitalDesignTokens.foundations.layout.breakpoints.desktop.wide),
+          mx: 'auto',
+          '&:focus': { outline: 'none' },
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+}

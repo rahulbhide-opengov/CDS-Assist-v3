@@ -1,0 +1,67 @@
+// OpenGov CDS-Assist Domain Schema
+
+Table work_orders {
+  id varchar [pk]
+  title varchar [not null]
+  description text
+  status varchar [note: 'open, in_progress, completed, closed']
+  priority varchar [note: 'low, medium, high, critical']
+  assigned_to varchar [ref: > users.id]
+  asset_id varchar [ref: > assets.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table assets {
+  id varchar [pk]
+  name varchar [not null]
+  type varchar
+  location varchar
+  status varchar [note: 'active, maintenance, retired']
+  last_inspection timestamp
+}
+
+Table users {
+  id varchar [pk]
+  name varchar [not null]
+  email varchar [unique]
+  role varchar
+  department varchar
+  avatar_url varchar
+}
+
+Table permits {
+  id varchar [pk]
+  type varchar [not null]
+  applicant_id varchar [ref: > users.id]
+  status varchar [note: 'draft, submitted, in_review, approved, denied']
+  submitted_at timestamp
+  reviewed_by varchar [ref: > users.id]
+}
+
+Table invoices {
+  id varchar [pk]
+  vendor_id varchar
+  amount decimal
+  status varchar [note: 'draft, pending, approved, paid']
+  due_date date
+  department varchar
+}
+
+Table billing_accounts {
+  id varchar [pk]
+  account_number varchar [unique]
+  customer_name varchar
+  service_address varchar
+  status varchar [note: 'active, inactive, suspended']
+  balance decimal
+}
+
+Table procurement_projects {
+  id varchar [pk]
+  title varchar [not null]
+  status varchar [note: 'planning, active, completed, cancelled']
+  budget decimal
+  department varchar
+  created_at timestamp
+}

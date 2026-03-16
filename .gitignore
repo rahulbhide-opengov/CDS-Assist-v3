@@ -1,0 +1,40 @@
+node_modules/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+
+# Figma tokens (never commit)
+.figma-token
+
+# Downloaded design system docs (fetched during install)
+.design-system-cache/
+
+# Figma Desktop Bridge plugin (copied during install)
+figma-plugin/
+
+# Figma DS manifest cache (generated at runtime)
+.figma-cache/
+
+# User config (machine-specific, created by installer)
+config/
+
+# Cache directories
+cache/
+
+# OS files
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Agent transcripts (session-specific)
+agent-transcripts/

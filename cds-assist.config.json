@@ -1,0 +1,56 @@
+{
+  "figma": {
+    "autoSyncBeforeCreate": true,
+    "manifestFormat": "compact",
+    "includeImagesInKit": false,
+    "syncTtlSeconds": 0,
+    "sourcePrecedence": ["core", "patterns", "icons", "product"],
+    "autoFix": true
+  },
+  "defaultSources": [
+    {
+      "id": "cds-37",
+      "name": "CDS 37",
+      "fileUrl": "https://www.figma.com/design/MxdeZ8e13qSmlenBVMmzzI/CDS-37",
+      "fileKey": "MxdeZ8e13qSmlenBVMmzzI",
+      "role": "core",
+      "priority": 100,
+      "include": ["tokens", "components", "styles"],
+      "enabled": true,
+      "description": "CDS Design System v37 — primary component library with tokens, styles, and all base components"
+    },
+    {
+      "id": "cds-37-patterns",
+      "name": "CDS 37 Patterns",
+      "fileUrl": "https://www.figma.com/design/ovXZlZTFwlNBTISlap4s4p/CDS-37-Patterns",
+      "fileKey": "ovXZlZTFwlNBTISlap4s4p",
+      "role": "patterns",
+      "priority": 80,
+      "include": ["components", "styles"],
+      "enabled": true,
+      "description": "CDS patterns and organisms — larger page-level patterns, data tables, forms, dashboards"
+    },
+    {
+      "id": "cds-37-icons",
+      "name": "CDS 37 Icons",
+      "fileUrl": "https://www.figma.com/design/xaElUstGXrXTsCRKp2IOhF/CDS-37-Icons",
+      "fileKey": "xaElUstGXrXTsCRKp2IOhF",
+      "role": "icons",
+      "priority": 60,
+      "include": ["components"],
+      "enabled": true,
+      "description": "CDS icon library — all approved icon components"
+    },
+    {
+      "id": "agents",
+      "name": "Agents (OG Assist)",
+      "fileUrl": "https://www.figma.com/design/x2US3gmKKjSeby3troKJRa/Agents",
+      "fileKey": "x2US3gmKKjSeby3troKJRa",
+      "role": "product",
+      "priority": 40,
+      "include": ["components", "styles"],
+      "enabled": true,
+      "description": "OG Assist / OpenGov AI — agent-specific components and patterns"
+    }
+  ]
+}

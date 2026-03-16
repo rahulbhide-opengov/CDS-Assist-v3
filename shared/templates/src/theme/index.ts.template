@@ -1,0 +1,125 @@
+import { createTheme } from '@mui/material/styles';
+import { capitalMuiTheme } from '@opengov/capital-mui-theme';
+import type { ThemeOptions } from '@mui/material/styles';
+
+const cdsComponents: ThemeOptions['components'] = {
+  MuiButton: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiRadio: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        '&.Mui-focused': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiPaper: {
+    defaultProps: { elevation: 0 },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: theme.shape.borderRadius,
+      }),
+    },
+  },
+  MuiTableContainer: {
+    styleOverrides: {
+      root: ({ theme }: any) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: theme.shape.borderRadius,
+      }),
+    },
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      head: ({ theme }: any) => ({
+        backgroundColor: theme.palette.background.secondary,
+        fontWeight: 600,
+      }),
+      root: {
+        'tbody tr:last-child &': { borderBottom: 'none' },
+      },
+    },
+  },
+  MuiAccordion: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: theme.shape.borderRadius || '4px',
+        '&:before': { display: 'none' },
+        '&.Mui-expanded': { borderColor: theme.palette.primary.main },
+      }),
+    },
+  },
+};
+
+export const createCdsTheme = () => {
+  return createTheme(capitalMuiTheme, {
+    palette: {
+      ...capitalMuiTheme.palette,
+      background: {
+        ...capitalMuiTheme.palette.background,
+        secondary: '#f8f8f8',
+      },
+    },
+    components: cdsComponents,
+  });
+};
+
+export const theme = createCdsTheme();

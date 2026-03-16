@@ -1,0 +1,7 @@
+import React from 'react';
+import { BaseLayout } from '../components/BaseLayout';
+import { {{SUITE_SLUG}}LayoutConfig } from '../config/{{SUITE_SLUG}}NavConfig';
+
+export function {{LAYOUT_NAME}}({ children }: { children: React.ReactNode }) {
+  return <BaseLayout config={{OPEN_BRACE}}{{SUITE_SLUG}}LayoutConfig}>{children}</BaseLayout>;
+}

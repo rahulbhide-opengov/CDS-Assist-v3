@@ -1,0 +1,37 @@
+{
+  "name": "cds-assist",
+  "version": "3.0.0",
+  "description": "CDS-Assist — AI design engine for OpenGov. Creates UI designs, React code, and Figma layouts using the CDS Design System.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install-agent": "bash scripts/install.sh",
+    "uninstall-agent": "bash scripts/install.sh --uninstall",
+    "cds:figma:setup": "node --loader ts-node/esm shared/engine/cli.ts figma:setup",
+    "cds:figma:libs:list": "node --loader ts-node/esm shared/engine/cli.ts figma:libs:list",
+    "cds:figma:libs:add": "node --loader ts-node/esm shared/engine/cli.ts figma:libs:add",
+    "cds:figma:libs:update": "node --loader ts-node/esm shared/engine/cli.ts figma:libs:update",
+    "cds:figma:libs:remove": "node --loader ts-node/esm shared/engine/cli.ts figma:libs:remove",
+    "cds:figma:sync": "node --loader ts-node/esm shared/engine/cli.ts figma:sync",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "cds",
+    "design-system",
+    "opengov",
+    "figma",
+    "react",
+    "agent",
+    "mcp"
+  ],
+  "author": "OpenGov",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "vitest": "^2.0.0"
+  }
+}
