@@ -89,7 +89,7 @@ const cdsComponents: ThemeOptions['components'] = {
   MuiTableCell: {
     styleOverrides: {
       head: ({ theme }: any) => ({
-        backgroundColor: theme.palette.background.secondary,
+        backgroundColor: theme.palette.grey[50],
         fontWeight: 600,
       }),
       root: {
@@ -111,13 +111,6 @@ const cdsComponents: ThemeOptions['components'] = {
 
 export const createCdsTheme = () => {
   return createTheme(capitalMuiTheme, {
-    palette: {
-      ...capitalMuiTheme.palette,
-      background: {
-        ...capitalMuiTheme.palette.background,
-        secondary: '#f8f8f8',
-      },
-    },
     components: cdsComponents,
   });
 };

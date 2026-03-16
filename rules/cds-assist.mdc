@@ -84,10 +84,14 @@ Theme covers 70+ components with all semantic colors. Use props, not manual sx.
 - **TextField**: `size` — theme handles typography, radius, focus. Use `slotProps` not `InputProps`.
 - **Checkbox/Radio/Switch**: `color` + `size` + `FormControlLabel`
 - **Alert**: `severity` + optional `variant="filled"/"outlined"`
-- **Chip**: `color` + `size` + optional `variant="outlined"`
-- **Dialog/Accordion/Card**: use subcomponents as-is
+- **Chip**: `color` + `size` + optional `variant="outlined"`. Use status-to-color mapping: `Record<string, 'info' | 'success' | 'warning' | 'error' | 'default'>`
+- **Card**: `variant="outlined"` for dashboard sections. Use subcomponents as-is.
+- **Link**: `variant` + `color` + `underline="hover"` for clickable text. Never Typography with onClick.
+- **Dialog/Accordion**: use subcomponents as-is
 - Page components = **ZERO direct token imports**. Use palette paths only.
 - sx for **layout only**: display, flex, gap, p/m, width, position, textAlign
+- **Charts**: `useTheme()` + `capitalDesignTokens.semanticColors.dataVisualization` for colors. `theme.palette.divider` for grid. `theme.typography.caption.fontSize` for axis text.
+- **`import type`**: ALWAYS for type-only imports. Missing this = blank page, zero console errors.
 
 ## Figma Library Architecture
 | Library | File Key | Role |

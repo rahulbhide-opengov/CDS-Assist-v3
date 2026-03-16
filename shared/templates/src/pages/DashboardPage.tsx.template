@@ -1,17 +1,127 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Stack,
+  Chip,
+  Divider,
+  Link,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import { PageHeaderComposable } from '@opengov/components-page-header';
 import { capitalDesignTokens } from '@opengov/capital-mui-theme';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import AddIcon from '@mui/icons-material/Add';
 
-const metrics = [
+// ---------------------------------------------------------------------------
+// Mock data — replace with real API calls
+// ---------------------------------------------------------------------------
+
+interface Metric {
+  id: string;
+  label: string;
+  value: string;
+  changePercent: number;
+}
+
+interface RecentItem {
+  id: string;
+  title: string;
+  status: string;
+  date: string;
+}
+
+const metrics: Metric[] = [
   { id: '1', label: 'Total Items', value: '1,247', changePercent: 12 },
   { id: '2', label: 'Active', value: '892', changePercent: 8 },
   { id: '3', label: 'Pending', value: '156', changePercent: -3 },
   { id: '4', label: 'Completed', value: '199', changePercent: 24 },
 ];
 
+const recentItems: RecentItem[] = [
+  { id: 'ITM-1042', title: 'Infrastructure Maintenance', status: 'Approved', date: 'Mar 10' },
+  { id: 'ITM-1041', title: 'Equipment Procurement', status: 'In Review', date: 'Mar 9' },
+  { id: 'ITM-1040', title: 'Facility Inspection', status: 'On Hold', date: 'Mar 8' },
+  { id: 'ITM-1039', title: 'Budget Allocation', status: 'Submitted', date: 'Mar 7' },
+  { id: 'ITM-1038', title: 'Vendor Contract Renewal', status: 'Denied', date: 'Mar 6' },
+];
+
+const STATUS_CHIP_COLOR: Record<string, 'info' | 'success' | 'warning' | 'default' | 'error'> = {
+  'In Review': 'info',
+  'Approved': 'success',
+  'On Hold': 'warning',
+  'Submitted': 'default',
+  'Denied': 'error',
+};
+
+// ---------------------------------------------------------------------------
+// MetricCard
+// ---------------------------------------------------------------------------
+
+function MetricCard({ label, value, changePercent }: Metric) {
+  const isPositive = changePercent >= 0;
+
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Typography variant="caption" color="text.secondary">{label}</Typography>
+        <Typography variant="h4" sx={{ my: 1 }}>{value}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          {isPositive
+            ? <TrendingUpIcon fontSize="small" color="success" />
+            : <TrendingDownIcon fontSize="small" color="error" />}
+          <Typography variant="body2" color={isPositive ? 'success.main' : 'error.main'}>
+            {isPositive ? '+' : ''}{changePercent}% from last period
+          </Typography>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// RecentItemsList
+// ---------------------------------------------------------------------------
+
+function RecentItemsList() {
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Typography variant="h6" sx={{ mb: 2 }}>Recent Activity</Typography>
+        <Stack spacing={0} divider={<Divider />}>
+          {recentItems.map((item) => (
+            <Box key={item.id} sx={{ py: 1.5 }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                <Link variant="body2" color="primary" underline="hover" href="#">
+                  {item.id}
+                </Link>
+                <Chip label={item.status} size="small"
+                      color={STATUS_CHIP_COLOR[item.status] ?? 'default'} />
+              </Stack>
+              <Typography variant="body2">{item.title}</Typography>
+              <Typography variant="caption" color="text.secondary">{item.date}</Typography>
+            </Box>
+          ))}
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// DashboardPage
+// ---------------------------------------------------------------------------
+
 const DashboardPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <Box component="header">
@@ -19,123 +129,83 @@ const DashboardPage: React.FC = () => {
           maxContentWidth={capitalDesignTokens.foundations.layout.breakpoints.desktop.wide}
         >
           <PageHeaderComposable.Header
-            actions={[
-              <Button key="export" variant="outlined" size="small">
-                Export
-              </Button>,
-            ]}
+            actions={
+              isMobile
+                ? undefined
+                : [
+                    <Button key="export" variant="outlined" color="secondary" size="medium"
+                            startIcon={<FileDownloadOutlinedIcon />}>Export</Button>,
+                    <Button key="create" variant="contained" color="primary" size="medium"
+                            startIcon={<AddIcon />}>Create New</Button>,
+                  ]
+            }
           >
             <PageHeaderComposable.Title>Dashboard</PageHeaderComposable.Title>
             <PageHeaderComposable.Description>
-              Overview of key metrics and recent activity
+              Overview of key metrics and recent activity.
             </PageHeaderComposable.Description>
           </PageHeaderComposable.Header>
         </PageHeaderComposable>
       </Box>
+
+      {isMobile && (
+        <Stack direction="row" spacing={1} sx={{ px: 2, pb: 2 }}>
+          <Button variant="outlined" color="secondary" size="small" fullWidth
+                  startIcon={<FileDownloadOutlinedIcon />}>Export</Button>
+          <Button variant="contained" color="primary" size="small" fullWidth
+                  startIcon={<AddIcon />}>Create New</Button>
+        </Stack>
+      )}
 
       <Box
         component="main"
         sx={{
           maxWidth: capitalDesignTokens.foundations.layout.breakpoints.desktop.wide,
           mx: 'auto',
-          px: { xs: 2, sm: 4, md: 6 },
-          py: 4,
+          px: { xs: 2, sm: 3, md: 4 },
+          py: 3,
         }}
       >
-        {/* KPI Row */}
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr 1fr',
-              md: 'repeat(4, 1fr)',
-            },
-            gap: 3,
-            mb: 4,
-          }}
-        >
-          {metrics.map((metric) => (
-            <Card key={metric.id}>
+        <Stack spacing={3}>
+          {/* KPI Row */}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+              gap: 2,
+            }}
+          >
+            {metrics.map((metric) => (
+              <MetricCard key={metric.id} {...metric} />
+            ))}
+          </Box>
+
+          {/* Two-column layout */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+            <Card variant="outlined" sx={{ flex: { xs: '1 1 100%', md: '2 1 0' }, minWidth: 0 }}>
               <CardContent>
-                <Typography variant="caption" color="text.secondary">
-                  {metric.label}
-                </Typography>
-                <Typography variant="h4" sx={{ my: 1 }}>
-                  {metric.value}
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <TrendingUpIcon
-                    fontSize="small"
-                    color={metric.changePercent > 0 ? 'success' : 'error'}
-                  />
-                  <Typography
-                    variant="body2"
-                    color={metric.changePercent > 0 ? 'success.main' : 'error.main'}
-                  >
-                    {metric.changePercent > 0 ? '+' : ''}
-                    {metric.changePercent}% from last period
+                <Typography variant="h6" sx={{ mb: 2 }}>Trend Overview</Typography>
+                <Box
+                  sx={{
+                    height: 280,
+                    bgcolor: 'background.default',
+                    borderRadius: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Typography variant="body2" color="text.secondary">
+                    Add recharts — see react-codegen.md chart theming section
                   </Typography>
                 </Box>
               </CardContent>
             </Card>
-          ))}
-        </Box>
-
-        {/* Two-column layout */}
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
-            gap: 3,
-          }}
-        >
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Trend Overview
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Chart visualization will be rendered here.
-              </Typography>
-              <Box
-                sx={{
-                  height: 200,
-                  mt: 2,
-                  bgcolor: 'background.default',
-                  borderRadius: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography variant="body2" color="text.secondary">
-                  Add recharts for data visualization
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Recent Activity
-              </Typography>
-              {['Item #1042 approved', 'New item created', 'Status updated'].map(
-                (activity, idx) => (
-                  <Box
-                    key={idx}
-                    sx={{ py: 1.5, borderBottom: 1, borderColor: 'divider' }}
-                  >
-                    <Typography variant="body2">{activity}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {idx + 1}h ago
-                    </Typography>
-                  </Box>
-                ),
-              )}
-            </CardContent>
-          </Card>
-        </Box>
+            <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 0' }, minWidth: 0 }}>
+              <RecentItemsList />
+            </Box>
+          </Box>
+        </Stack>
       </Box>
     </Box>
   );

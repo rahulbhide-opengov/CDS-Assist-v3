@@ -109,14 +109,30 @@ const safeX = existing.length > 0 ? maxX + 200 : 0;
   - Always warm up the library first by importing Chip before other imports.
 
 ### If React selected:
-- Generate React/TS with CDS theme + MUI. Add route to `src/App.tsx` if new page.
-- **MANDATORY**: Wrap every page in Layout + PageHeaderComposable (see Page Structure below)
-- Handle 4 states: loading, error, empty, success
-- `import type` for TS type-only exports
-- **React Verification:**
-  1. Start dev server (`npm run dev`) — zero build errors
-  2. Open page in browser — visible content, zero console errors
-  3. If blank page: check `import type` in theme files
+
+#### React Execution (mandatory in order):
+  1. **Load reference**: Read `references/react-codegen.md` — the complete React code generation bible. Follow it exactly.
+  2. **Component hierarchy**: CDS components first (`@opengov/components-*`) → MUI with CDS theme → custom with CDS tokens. Never skip a tier.
+  3. **Create mock data**: Create `src/data/[suite]Data.ts` with typed interfaces. Status colors use semantic palette keys (`'info'`, `'success'`), never hex. Export typed constants.
+  4. **Create page component**: Every page MUST have all three layers:
+     - **Layer 1**: Layout wrapper (provides navigation bar)
+     - **Layer 2**: `PageHeaderComposable` from `@opengov/components-page-header` (never hand-built)
+     - **Layer 3**: Content area with `maxWidth: capitalDesignTokens.foundations.layout.breakpoints.desktop.wide`
+  5. **Style with theme only**:
+     - MUI components: use `variant` + `color` + `size` props. Never override visual props in `sx`.
+     - `sx` is for layout only: `display`, `flex`, `gap`, `p`/`m`, `width`, `position`.
+     - Charts (recharts): use `useTheme()` + `capitalDesignTokens.semanticColors.dataVisualization` for colors, `theme.palette.divider` for grid lines, `theme.typography.caption.fontSize` for axis text.
+     - Palette paths in `sx`: `bgcolor: 'background.paper'`, `borderColor: 'divider'`, `color: 'text.secondary'`.
+  6. **Handle responsive**: Desktop (1440), Tablet (768), Mobile (390). Tables → card stacks on mobile. Action buttons move below header on mobile. Same content at all breakpoints.
+  7. **Handle 4 states**: loading (Skeleton), error (Alert + retry), empty (illustration + CTA), success (content).
+  8. **Verify `import type`**: Every type-only import MUST use `import type`. Missing this causes a blank white page with zero console errors.
+  9. **Add route**: Register in `src/App.tsx` with lazy loading, `<Suspense>`, and `<ErrorBoundary>`.
+  10. **Verify**:
+      - `npx tsc --noEmit` — zero TypeScript errors
+      - `npm run dev` — dev server starts, page renders with visible content
+      - Browser console — zero JS errors
+      - If blank page → check `import type` in theme files and page files
+      - No hardcoded colors, spacing, or typography — only theme tokens
 
 ### Ongoing Changes:
 - Update React code immediately for any modifications
@@ -303,14 +319,16 @@ import { TextField, InputAdornment } from '@mui/material';
 // Small variant
 <TextField label="Search" size="small" />
 
-// With icon
+// With icon (MUI 7: use slotProps, not InputProps)
 <TextField
   label="Search"
   size="medium"
-  InputProps={{
-    startAdornment: (
-      <InputAdornment position="start"><SearchIcon /></InputAdornment>
-    ),
+  slotProps={{
+    input: {
+      startAdornment: (
+        <InputAdornment position="start"><SearchIcon /></InputAdornment>
+      ),
+    },
   }}
 />
 
@@ -418,15 +436,43 @@ Non-CDS component heights → nearest CDS size. Spacing ALWAYS on 4px grid.
 | TextField | `size="small"` (28px) | default (32px) | sx with `sizingTokens.input.large` |
 | Chip | `size="small"` (28px) | `size="medium"` (32px) | sx with `sizingTokens.chip.large` |
 
+## Chart Theming Rules (recharts + CDS)
+
+Charts are the primary place where `useTheme()` is required — recharts doesn't understand MUI palette paths.
+
+- **Multi-series bar/line colors**: `capitalDesignTokens.semanticColors.dataVisualization.sequence700`, `.sequence100`, `.sequence200`
+- **Status-based pie/donut colors**: resolve from `theme.palette` using semantic keys (`'info'`, `'success'`, `'warning'`, `'error'`)
+- **Grid lines**: `stroke={theme.palette.divider}`
+- **Axis text**: `tick={{ fontSize: theme.typography.caption.fontSize, fill: theme.palette.text.secondary }}`
+- **Tooltip**: `backgroundColor: theme.palette.background.paper`, `border: 1px solid ${theme.palette.divider}`, `fontFamily: theme.typography.fontFamily`
+- **Legend**: `fontFamily: theme.typography.fontFamily`, `fontSize: theme.typography.caption.fontSize`
+- **Bar radius**: `radius={[2, 2, 0, 0]}` for top-rounded bars
+- **No hardcoded hex in any chart element** — always derive from theme or `capitalDesignTokens`
+
+## Status Chip Color Mapping
+
+Standard pattern for mapping statuses to MUI Chip colors:
+```tsx
+const STATUS_CHIP_COLOR: Record<string, 'info' | 'success' | 'warning' | 'default' | 'error'> = {
+  'In Review': 'info', 'Approved': 'success', 'On Hold': 'warning',
+  'Submitted': 'default', 'Denied': 'error', 'Active': 'success',
+};
+<Chip label={status} size="small" color={STATUS_CHIP_COLOR[status] ?? 'default'} />
+```
+
 ## Code Rules
 
 - No hardcoded colors/spacing — theme tokens only
-- Import order: React → @opengov → MUI → Local
+- Import order: React → @opengov → MUI → Third-party → Local → `import type`
 - `PageHeaderComposable` from `@opengov/components-page-header` on every page
 - Layout wrapper (`BaseLayout` or suite layout) on every page route
 - 4 states: loading (Skeleton or CircularProgress), error (Alert severity="error"), empty (illustration + Typography), success (content)
+- `import type` for TS type-only exports — missing this causes blank pages
+- `Card variant="outlined"` for dashboard sections (border, no shadow)
+- `Link` component for clickable text (not Typography with onClick)
+- `slotProps` for TextField adornments (not deprecated `InputProps`)
+- Mock data in `src/data/` with typed interfaces; colors as semantic palette keys
 - Never reference "seamstress"
-- `import type` for TS type-only exports
 
 ## Pattern Detection
 

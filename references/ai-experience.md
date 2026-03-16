@@ -206,7 +206,7 @@ Paper elevation={2} sx={{ p: 1, position: 'sticky', bottom: 0 }}
 │   multiline
 │   maxRows={4}
 │   placeholder="Ask OG Assist..."
-│   InputProps={{ endAdornment: <IconButton><Send /></IconButton> }}
+│   slotProps={{ input: { endAdornment: <IconButton><Send /></IconButton> } }}
 └── Stack direction="row" spacing={1} mt={1} (optional suggested prompts)
     ├── Chip variant="outlined" size="small" clickable: "Summarize this page"
     ├── Chip variant="outlined" size="small" clickable: "Find similar records"
