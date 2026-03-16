@@ -50,8 +50,8 @@ CDS-Assist is an AI agent skill that teaches Claude how to build OpenGov interfa
 ### Install
 
 ```bash
-git clone https://github.com/opengov/CDS-Assist.git
-cd CDS-Assist && ./setup
+git clone https://github.com/rahulbhide-opengov/CDS-Assist-v3.git
+cd CDS-Assist-v3 && ./setup
 ```
 
 That's it. The `./setup` script will:
@@ -79,7 +79,7 @@ That's it. The `./setup` script will:
 ### Update
 
 ```bash
-cd CDS-Assist && git pull
+cd CDS-Assist-v3 && git pull
 ```
 
 The installer uses symlinks — `git pull` refreshes everything instantly.
@@ -150,7 +150,7 @@ The agent follows a strict precedence order:
 ## Repository Structure
 
 ```
-CDS-Assist/
+CDS-Assist-v3/
 ├── setup                           # One-command installer (run this first!)
 ├── SKILL.md                        # Main skill file (what Claude reads)
 ├── SETUP.md                        # Detailed setup & usage guide
@@ -238,7 +238,7 @@ The installer copies the Figma Desktop Bridge plugin to `figma-plugin/`. This pl
 
 1. Open Figma Desktop
 2. Go to **Plugins → Development → Import plugin from manifest**
-3. Navigate to `CDS-Assist/figma-plugin/` and select `manifest.json`
+3. Navigate to `CDS-Assist-v3/figma-plugin/` and select `manifest.json`
 4. In your Figma file, run: **Plugins → Development → Figma Desktop Bridge**
 
 ### Figma Capabilities

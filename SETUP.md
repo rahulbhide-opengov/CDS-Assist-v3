@@ -99,8 +99,8 @@ If you don't have Cursor yet:
 Open your terminal (Terminal app on macOS, Command Prompt on Windows) and run:
 
 ```bash
-git clone https://github.com/opengov/CDS-Assist.git
-cd CDS-Assist
+git clone https://github.com/rahulbhide-opengov/CDS-Assist-v3.git
+cd CDS-Assist-v3
 ./setup
 ```
 
@@ -137,7 +137,7 @@ The setup script will walk you through everything:
 | 3 | Symlinks the skill to your IDE | `~/.cursor/skills/cds-assist` |
 | 4 | Installs the auto-routing rule | `~/.cursor/rules/cds-assist.mdc` |
 | 5 | Adds the Figma MCP server to IDE config | `~/.cursor/mcp.json` |
-| 6 | Copies the Figma Desktop Bridge plugin | `CDS-Assist/figma-plugin/` |
+| 6 | Copies the Figma Desktop Bridge plugin | `CDS-Assist-v3/figma-plugin/` |
 
 ### Skipped the Figma token?
 
@@ -173,7 +173,7 @@ The Figma Desktop Bridge plugin connects Figma to the AI agent via WebSocket. Th
 1. Open **Figma Desktop** (not the browser version)
 2. Open any Figma file (or create a new one)
 3. Go to **Plugins → Development → Import plugin from manifest**
-4. Navigate to the `CDS-Assist/figma-plugin/` folder inside the repo you cloned
+4. Navigate to the `CDS-Assist-v3/figma-plugin/` folder inside the repo you cloned
 5. Select `manifest.json` and click **Open**
 
 ### Run the Plugin
@@ -324,7 +324,7 @@ Generated React code follows these rules:
 The installer uses symlinks, so updating is instant:
 
 ```bash
-cd CDS-Assist
+cd CDS-Assist-v3
 git pull
 ```
 
@@ -403,7 +403,7 @@ The uninstaller does **not** remove the MCP entry from `~/.cursor/mcp.json`. To 
 After uninstalling, you can safely delete the cloned repo:
 
 ```bash
-rm -rf CDS-Assist
+rm -rf CDS-Assist-v3
 ```
 
 ---
@@ -427,7 +427,7 @@ This provides:
 CDS-Assist works on Claude.ai for React code generation (no Figma). To upload:
 
 ```bash
-cd CDS-Assist
+cd CDS-Assist-v3
 zip -r cds-assist.zip SKILL.md references/ shared/
 ```
 
