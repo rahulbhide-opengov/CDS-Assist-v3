@@ -67,6 +67,17 @@ cd CDS-Assist-v3 && ./setup
 
 ---
 
+## Project Isolation (don’t touch main agent files)
+- Keep the main agent skill files in this repo root untouched.
+- When creating a new project or branch, use a separate worktree/folder so you don’t modify the main workspace:
+  ```bash
+  git worktree add ../my-new-project main   # or your starting branch
+  cd ../my-new-project
+  npm install
+  npm run dev
+  ```
+- This keeps CDS-Assist skills reusable while isolating experimental work. Remove when done: `git worktree remove ../my-new-project` (after committing/cleaning).
+
 ## Architecture
 
 ### Semantic Skill System (13 skills)
