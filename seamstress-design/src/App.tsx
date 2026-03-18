@@ -137,7 +137,6 @@ const FinancialsDashboard = lazy(() => import('./pages/financials/FinancialsDash
 // Permitting
 const PermittingDashboard = lazy(() => import('./pages/permitting/PermittingDashboard'));
 const UserProfilePage = lazy(() => import('./pages/permitting/UserProfilePage'));
-const ExploreReportsPage = lazy(() => import('./pages/permitting/ExploreReportsPage'));
 
 // Labs pages
 const LabsIndexPage = lazy(() => import('./pages/labs/LabsIndexPage'));
@@ -494,7 +493,6 @@ function App() {
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<PageTransition><PermittingDashboard /></PageTransition>} />
                   <Route path="profile" element={<PageTransition><UserProfilePage /></PageTransition>} />
-                  <Route path="explore-reports" element={<PageTransition><ExploreReportsPage /></PageTransition>} />
                   <Route path="*" element={<Navigate to="dashboard" replace />} />
                 </Routes>
               </PermittingLayout>
