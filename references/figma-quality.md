@@ -2,7 +2,7 @@
 
 **MANDATORY**: Read this file alongside `figma.md` for every Figma design. This file defines the non-negotiable quality rules that separate amateur output from production-grade design system work.
 
-## The 11 Absolute Rules
+## The 14 Absolute Rules
 
 1. **ZERO hardcoded colors** — every solid fill and stroke MUST be bound to a CDS **library** variable
 2. **ZERO local copies** — NEVER create local text styles, color variables, or effect styles. Use them from the CDS 37 library.
@@ -15,8 +15,11 @@
    - Set via: `instance.setProperties({ 'Product': 'Procurement' })` or import the specific variant key directly.
 8. **Content parity across breakpoints** — when building responsive variations (desktop/tablet/mobile), ALL breakpoints MUST show the same data: same sections, same number of table rows or list items, same KPI cards, same charts. Only the **layout** changes (columns → stacked, table → cards, side-by-side → vertical). NEVER drop, truncate, or reduce content for smaller screens.
 9. **Page Heading from library** — NEVER hand-build page headers with raw text/frames. Always use the `Page Heading` component (set key `ed8d390034cdc9b76fc11e1e2647856ff734d33d`, default variant key `17d737470c3a274dececd1d355b594e75e2622c1`). Set `layoutSizingHorizontal = 'FILL'`, configure breadcrumbs/description/actions via boolean properties, use `Small Screen: True` for tablet/mobile. Override text via `findAll` on TEXT nodes (h1 = title, body1 = description, body2 = breadcrumb items).
-10. **PSP Menu on EVERY screen** — the Platform Side Panel (PSP) Menu MUST be present on every design. On **desktop**: show as a visible 320px left sidebar (below Global Nav, left of content) with Entity selector, Action Hubs, Products, Capabilities, and Preferences sections. Highlight the current product in the Products list. On **tablet/mobile**: PSP is hidden behind the hamburger menu icon in the Global Nav (no visible sidebar). The PSP Menu component key is `16da480901ce5bdd694aa97596f7f6bd3eddff32` (import may time out for complex components — build manually if needed, matching the CDS pattern exactly).
-11. **Global Nav + Page Heading + PSP = mandatory on EVERY design** — no screen is complete without all three. Global Navigation at top, PSP Menu as sidebar (desktop) or behind hamburger (tablet/mobile), and Page Heading as the first content element after the nav area. This applies to every page, every breakpoint, no exceptions.
+10. **Global Nav + Page Heading = mandatory on EVERY design** — no screen is complete without both. Global Navigation at top and Page Heading as the first content element after the nav area. This applies to every page, every breakpoint, no exceptions.
+11. **MCP TOOLS FOR COMPONENTS — NEVER raw figma_execute for components** — Use `figma_search_components` → `figma_get_component_details` → `figma_instantiate_component` for ALL standard UI components (Button, Chip, Tab, TextField, Checkbox, Avatar, Divider, Card, Alert, Link, ListItem, Tabs, Table, Pagination). Reserve `figma_execute` ONLY for layout frame creation, auto-layout configuration, variable binding, and orchestration. NEVER use `figma_execute` to create `figma.createFrame() + figma.createText()` as a substitute for a library component.
+12. **CDS 37 ICONS LIBRARY — NEVER text characters or emoji as icons** — Every icon MUST be imported from the CDS 37 Icons library (567 icons, file key `xaElUstGXrXTsCRKp2IOhF`). Use `figma.importComponentByKeyAsync(iconKey)` with keys from `references/figma-icons-catalog.md`. Common icons: `magnify`, `plus`, `chevron-left`, `chevron-down`, `calendar`, `account`, `menu`. NEVER use text characters (☰, 🔍, ►) or Figma rectangles/ellipses as icon substitutes.
+13. **EXACT SPACING FROM SPECIFICATION** — When creating Figma from React code, ALL spacing values MUST be read from the React `sx` props and converted using `references/react-to-figma-mapping.md`. `px: 2` = 16px padding, `spacing={1.5}` = 12px gap, `pt: 1.5` = 12px paddingTop. NEVER guess or use default values. When creating from a screenshot or prompt, normalize to nearest 4px grid value.
+14. **REACT↔FIGMA MAPPING IS THE SOURCE OF TRUTH** — When source is React code, load and follow `references/react-to-figma-mapping.md` for every property translation. When source is Figma, reverse the mapping for React generation. The mapping table is exhaustive and eliminates guesswork.
 
 ## Library Architecture
 

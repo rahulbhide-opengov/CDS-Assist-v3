@@ -1,0 +1,8 @@
+/* Global CSS overrides */
+
+/* Hide OpenGov logo in NavBar at all screen widths */
+#openGovLogo,
+[data-test="nav_icon_opengov"],
+[aria-label="OpenGov Logo"] {
+  display: none !important;
+}

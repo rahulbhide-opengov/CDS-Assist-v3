@@ -1365,8 +1365,8 @@ const inst = compSet.defaultVariant.createInstance();
 - **Component Key**: `16da480901ce5bdd694aa97596f7f6bd3eddff32`
 - **Standalone component** (not a component set)
 - **Size**: 320 × ~1142 (variable height)
-- **Sections**: Entity selector, Action Hubs (Command Center, Notifications, Workflows, Reports, Data Management), Products (all OpenGov suites), Capabilities (Agent Studio, Government App Builder), Preferences (Admin settings)
-- **Usage**: Mandatory on every screen. Desktop = visible 320px left sidebar. Tablet/Mobile = hidden behind hamburger in Global Nav.
+- **Sections**: Entity selector, Action Hubs, Products, Capabilities, Preferences
+- **Usage**: NOT included in designs by default. Only use when the user explicitly requests a PSP/Platform Switcher view.
 - **Note**: Import via `importComponentByKeyAsync` may time out due to component complexity. If timeout occurs, build manually matching the CDS pattern: 320px wide, white bg, right border, auto-layout vertical, DM Sans typography, highlight current product with Blurple bg.
 
 ### Layout

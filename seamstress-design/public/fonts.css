@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 300;
+  font-style: normal;
+  src: url('./fonts/DMSans-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 300;
+  font-style: italic;
+  src: url('./fonts/DMSans-LightItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 400;
+  font-style: normal;
+  src: url('./fonts/DMSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 400;
+  font-style: italic;
+  src: url('./fonts/DMSans-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 500;
+  font-style: normal;
+  src: url('./fonts/DMSans-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 500;
+  font-style: italic;
+  src: url('./fonts/DMSans-MediumItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 600;
+  font-style: normal;
+  src: url('./fonts/DMSans-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 600;
+  font-style: italic;
+  src: url('./fonts/DMSans-SemiBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 700;
+  font-style: normal;
+  src: url('./fonts/DMSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-feature-settings: 'ss03' on;
+  font-weight: 700;
+  font-style: italic;
+  src: url('./fonts/DMSans-BoldItalic.woff2') format('woff2');
+}

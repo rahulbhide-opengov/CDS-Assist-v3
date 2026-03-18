@@ -93,9 +93,13 @@ When libraries are updated and published in Figma, the next sync automatically p
 
 ## Design Creation Workflow (DS-First)
 
+> **CRITICAL**: For the complete step-by-step creation workflow using MCP tools, see `references/figma-creation-workflow.md`.
+> For React→Figma property mapping, see `references/react-to-figma-mapping.md`.
+> For which approach to use based on input type, see `references/input-output-approaches.md`.
+
 ## Available MCP Tools
 
-The figma-console MCP provides 57+ tools. Key ones for design creation:
+The figma-console MCP provides 63+ tools. Key ones for design creation:
 
 ### Reading Designs
 
@@ -111,12 +115,14 @@ The figma-console MCP provides 57+ tools. Key ones for design creation:
 | `figma_get_file_data` | Full file structure |
 | `figma_get_design_system_kit` | Full design system in one call |
 
-### Creating Designs
+### Creating Designs (USE IN THIS PRIORITY ORDER)
 
-| Tool | Purpose |
-|------|---------|
-| `figma_execute` | **Power tool** — run any Figma Plugin API code |
-| `figma_instantiate_component` | Place existing components |
+| Tool | Purpose | Priority |
+|------|---------|----------|
+| `figma_search_components` | **Find CDS components by name** — get keys for instantiation | 1st — always search before instantiating |
+| `figma_get_component_details` | **Get variants, props, keys** for a component | 2nd — understand component API |
+| `figma_instantiate_component` | **Create REAL library instances** with variant + overrides + parentId | 3rd — ALWAYS use for components |
+| `figma_execute` | **Layout frames, auto-layout, variable binding ONLY** — NEVER for component creation | 4th — structural work only |
 | `figma_create_child` | Create child nodes |
 | `figma_set_text` | Set text content |
 | `figma_set_fills` | Set fill colors |
@@ -154,9 +160,8 @@ Before creating ANY design elements:
 6. Check for effect styles → create CDS elevation styles if missing → build `EFFECT_MAP`
 7. **Import Global Navigation** — insert as the FIRST child of every new screen frame with `layoutSizingHorizontal = 'FILL'`. Use the **suite-specific Product variant** when one exists; else use Default (key `c24369659d8f75ec3815d2d3ffb1342dd7e551b5`). This is mandatory for ALL breakpoints.
    - **Product variant keys**: Default `c24369659d8f75ec3815d2d3ffb1342dd7e551b5` | Procurement `0fae83904386321411e98e161624e268adeb9421` | B&P `35705b7547c5297e06e23fe6e8128fd1f7a0e3f6` | Utility Billing `3dba805ed57e9a20dac1e8aa086645029ec05c0f` | Asset Management `cdf8e5d33da9e62840d34f374e23024994c0d69f` | Agents Studio `6cd1426337fe22414c939ede70f4aa97630c72a8` | Vendor Portal `2945658715a063337c3e72bd6f557c07e23849f6` | Command Center `011496137077293e614fd65154c6944ca0db6655`
-8. **Add PSP Menu** — the Platform Side Panel (PSP) is mandatory on every screen. On **desktop**: add a visible 320px left sidebar (below Global Nav, left of content area) with sections: Entity selector, Action Hubs (Command Center, Notifications, Workflows, Reports, Data Management), Products (list all OpenGov suites, highlight the current one), Capabilities (Agent Studio, Government App Builder), Preferences (Admin settings). On **tablet/mobile**: PSP is hidden behind the hamburger menu icon in the Global Nav — no visible sidebar needed. Component key: `16da480901ce5bdd694aa97596f7f6bd3eddff32` (import may time out for this complex component — build manually if needed, matching the CDS pattern exactly).
-9. **Import Page Heading** — NEVER hand-build page headers. Use the `Page Heading` component (set key `ed8d390034cdc9b76fc11e1e2647856ff734d33d`, default variant key `17d737470c3a274dececd1d355b594e75e2622c1`). Insert after the nav area. Set `layoutSizingHorizontal = 'FILL'`. For tablet/mobile, set `Small Screen: True`. Override text nodes: `h1` = title, `body1` = description, `body2` items = breadcrumbs. Configure booleans: `Breadcrumbs`, `Description`, `Actions`, `Divider` as needed.
-10. **Plan content parity** — if creating multiple breakpoints, list all content sections from the desktop version. Every tablet and mobile screen MUST include every section with the same data (same rows, same items, same charts). Only the layout changes.
+8. **Import Page Heading** — NEVER hand-build page headers. Use the `Page Heading` component (set key `ed8d390034cdc9b76fc11e1e2647856ff734d33d`, default variant key `17d737470c3a274dececd1d355b594e75e2622c1`). Insert after the nav area. Set `layoutSizingHorizontal = 'FILL'`. For tablet/mobile, set `Small Screen: True`. Override text nodes: `h1` = title, `body1` = description, `body2` items = breadcrumbs. Configure booleans: `Breadcrumbs`, `Description`, `Actions`, `Divider` as needed.
+9. **Plan content parity** — if creating multiple breakpoints, list all content sections from the desktop version. Every tablet and mobile screen MUST include every section with the same data (same rows, same items, same charts). Only the layout changes.
 
 ### Step 1: Connect and Navigate
 

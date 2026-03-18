@@ -1,0 +1,113 @@
+import React from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import { useTheme } from '@mui/material/styles';
+
+interface RichTextEditorProps {
+  placeholder?: string;
+  content?: string;
+  onChange?: (html: string) => void;
+  minHeight?: number;
+}
+
+/** TipTap rich text editor with CDS styling. Theme tokens only. */
+export const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  placeholder = 'Start typing...',
+  content = '',
+  onChange,
+  minHeight = 120,
+}) => {
+  const theme = useTheme();
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Placeholder.configure({ placeholder }),
+    ],
+    content,
+    onUpdate: ({ editor }) => onChange?.(editor.getHTML()),
+    editorProps: {
+      attributes: {
+        style: `
+          font-family: ${theme.typography.fontFamily};
+          font-size: ${theme.typography.body1.fontSize};
+          color: ${theme.palette.text.primary};
+          min-height: ${minHeight}px;
+          padding: ${theme.spacing(2)};
+          outline: none;
+        `,
+      },
+    },
+  });
+
+  if (!editor) return null;
+
+  return (
+    <Box
+      sx={{
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: 1,
+        overflow: 'hidden',
+        bgcolor: 'background.paper',
+      }}
+    >
+      <ToggleButtonGroup
+        size="small"
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          bgcolor: 'background.secondary',
+          '& .MuiToggleButton-root': {
+            border: 'none',
+            color: 'text.secondary',
+            '&.Mui-selected': { color: 'primary.main', bgcolor: 'action.selected' },
+          },
+        }}
+      >
+        <ToggleButton
+          value="bold"
+          selected={editor.isActive('bold')}
+          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBold().run(); }}
+        >
+          <FormatBoldIcon fontSize="small" />
+        </ToggleButton>
+        <ToggleButton
+          value="italic"
+          selected={editor.isActive('italic')}
+          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleItalic().run(); }}
+        >
+          <FormatItalicIcon fontSize="small" />
+        </ToggleButton>
+        <ToggleButton
+          value="bulletList"
+          selected={editor.isActive('bulletList')}
+          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBulletList().run(); }}
+        >
+          <FormatListBulletedIcon fontSize="small" />
+        </ToggleButton>
+        <ToggleButton
+          value="orderedList"
+          selected={editor.isActive('orderedList')}
+          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleOrderedList().run(); }}
+        >
+          <FormatListNumberedIcon fontSize="small" />
+        </ToggleButton>
+        <ToggleButton
+          value="blockquote"
+          selected={editor.isActive('blockquote')}
+          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBlockquote().run(); }}
+        >
+          <FormatQuoteIcon fontSize="small" />
+        </ToggleButton>
+      </ToggleButtonGroup>
+      <EditorContent editor={editor} />
+    </Box>
+  );
+};

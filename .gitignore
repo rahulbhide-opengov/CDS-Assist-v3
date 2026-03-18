@@ -1,4 +1,12 @@
 node_modules/
+seamstress-design/node_modules/
+seamstress-design/dist/
+seamstress-design/.vite/
+seamstress-design/package-lock.json
+seamstress-design/.env.local
+seamstress-design/.husky/
+figma-cli/node_modules/
+figma-cli/package-lock.json
 .env
 .env.local
 *.log

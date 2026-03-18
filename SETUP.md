@@ -287,7 +287,6 @@ Every screen the agent creates includes:
 | Element | Desktop | Tablet/Mobile |
 |---------|---------|--------------|
 | **Global Navigation** | Full width at top | Full width at top with hamburger |
-| **PSP Menu** | 320px left sidebar | Hidden behind hamburger menu |
 | **Page Heading** | CDS library component | CDS library component (small screen variant) |
 
 ### Product-Specific Designs
@@ -353,7 +352,7 @@ Install Node.js 18+ from [nodejs.org](https://nodejs.org).
 
 ### "Component import timed out" in Figma
 
-Some complex CDS components (like PSP Menu) may time out during import. The agent handles this automatically by either:
+Some complex CDS components may time out during import. The agent handles this automatically by either:
 - Cloning from an existing instance in the file
 - Building the component manually using CDS patterns
 

@@ -1,0 +1,16 @@
+// This file contains the raw Figma-generated React code for reference
+// Agent will convert this to MUI components
+
+const img = "http://localhost:3845/assets/f7226c35679687e5c5e904dbdd4cd8e50494dd4d.png";
+const img1 = "http://localhost:3845/assets/8ba9988a7dff158641ee12341b87670a0469fc4b.png";
+const img2 = "http://localhost:3845/assets/867b086da29fbc5fef76c7042166f3fbde8d96d9.png";
+const img4 = "http://localhost:3845/assets/e567762fd3e06b499d59e2e5933b91ecbd12f6e7.png";
+const img5 = "http://localhost:3845/assets/9a6b8d6c85156510469734f30b828945953c55e4.png";
+const img6 = "http://localhost:3845/assets/53f1a36d9c34185d9db65623b05d1943a791aad5.png";
+const img7 = "http://localhost:3845/assets/82dd42c9b925483863f9ac056dc6f893dc4a5efc.png";
+const img8 = "http://localhost:3845/assets/3c9294aa395c81fcc9dde28219621355261c8ae7.png";
+const img9 = "http://localhost:3845/assets/6b5dd7f0398b97b48c3236575addae7dbc962212.png";
+const img10 = "http://localhost:3845/assets/4f9b0f7d5fdf2dc51e6ec8a85b600770dab3e032.png";
+const img11 = "http://localhost:3845/assets/26857fe72450cb74b10efe5c797f450b52e8ac38.png";
+
+// Full component code would go here - this is just the image asset references

@@ -1,0 +1,126 @@
+/**
+ * Dark mode component overrides for MUI components.
+ * Use with dark palette — theme tokens only, no hardcoded colors.
+ */
+import type { ThemeOptions } from '@mui/material/styles';
+
+export const darkThemeComponents: ThemeOptions['components'] = {
+  MuiPaper: {
+    defaultProps: { elevation: 0 },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+  },
+  MuiCard: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+  },
+  MuiDataGrid: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderColor: theme.palette.divider,
+        '& .MuiDataGrid-columnHeaders': {
+          backgroundColor: theme.palette.background.secondary,
+          borderColor: theme.palette.divider,
+        },
+        '& .MuiDataGrid-cell': {
+          borderColor: theme.palette.divider,
+        },
+        '& .MuiDataGrid-columnSeparator': {
+          color: theme.palette.divider,
+        },
+      }),
+    },
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderColor: theme.palette.divider,
+      }),
+      head: ({ theme }) => ({
+        backgroundColor: theme.palette.background.secondary,
+        borderColor: theme.palette.divider,
+      }),
+    },
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&.MuiChip-outlined': {
+          borderColor: theme.palette.divider,
+          backgroundColor: theme.palette.background.secondary,
+        },
+        '&.MuiChip-filled': {
+          backgroundColor: theme.palette.background.secondary,
+        },
+      }),
+    },
+  },
+  MuiAlert: {
+    styleOverrides: {
+      standardError: ({ theme }) => ({
+        backgroundColor: `${theme.palette.error.main}20`,
+      }),
+      standardWarning: ({ theme }) => ({
+        backgroundColor: `${theme.palette.warning.main}20`,
+      }),
+      standardInfo: ({ theme }) => ({
+        backgroundColor: `${theme.palette.info.main}20`,
+      }),
+      standardSuccess: ({ theme }) => ({
+        backgroundColor: `${theme.palette.success.main}20`,
+      }),
+    },
+  },
+  MuiAccordion: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        backgroundColor: theme.palette.background.paper,
+        '&:before': { display: 'none' },
+        '&.Mui-expanded': {
+          borderLeft: `4px solid ${theme.palette.primary.main}`,
+        },
+      }),
+    },
+  },
+  MuiButton: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: theme.palette.primary.main,
+          outlineOffset: 2,
+        },
+      }),
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderColor: theme.palette.primary.main,
+          borderWidth: 2,
+        },
+      }),
+    },
+  },
+};

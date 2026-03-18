@@ -1,0 +1,29 @@
+# Kubernetes Ingress for CDS-Assist
+# Host-based routing with TLS via cert-manager
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cds-assist
+  labels:
+    app: cds-assist
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - cds-assist.example.com
+      secretName: cds-assist-tls
+  rules:
+    - host: cds-assist.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cds-assist
+                port:
+                  number: 80

@@ -1,0 +1,47 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7862a55 (Add interactive logo animation playground with 6 seamless transformation algorithms)
+<svg width="151" height="151" viewBox="0 0 151 151" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 150L75.5 0.727539V150" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.6 150H150.5L0.5 75.3501H150.5L0.5 150H130.41" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/>
+<path d="M150.5 0.709961H0.5V150.01H150.5V0.709961Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/>
+<path d="M0.5 75.35L150.5 0.709961M150.5 0.709961L75.4999 150M150.5 0.709961H75.5M0.5 0.709961L150.5 75.35M0.5 0.709961L75.4999 150M0.5 0.709961H75.5M75.4999 150L75.5 0.709961M75.5 0.709961L150.5 150" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<<<<<<< HEAD
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="logo-type" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232.4 240.95">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231f20;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        stroke-dasharray: 2;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="25.66" y="28.51" width="182.97" height="182.97" rx="20" ry="20"/>
+  <polyline class="cls-2" points="42.29 193.44 117.29 43.44 117.29 193.44"/>
+  <polyline class="cls-3" points="62.39 193.44 192.29 193.44 42.29 118.79 192.29 118.79 42.29 193.44 172.2 193.44"/>
+  <polyline class="cls-2" points="192.29 193.44 117.29 43.44 117.29 193.44"/>
+  <polyline class="cls-3" points="192.29 43.44 117.29 193.44 117.29 43.44"/>
+  <polyline class="cls-3" points="42.29 43.44 117.29 193.44 117.29 43.44"/>
+  <rect class="cls-3" x="42.29" y="44.15" width="150" height="149.3"/>
+  <polyline class="cls-2" points="42.29 118.79 192.29 44.15 42.29 44.15 192.29 118.79"/>
+  <polygon class="cls-3" points="42.29 193.44 117.29 43.44 192.29 193.44 117.29 156.12 42.29 193.44"/>
+  <polygon class="cls-2" points="42.29 193.44 72.79 132.44 117.29 156.12 42.29 193.44"/>
+  <polygon class="cls-2" points="192.29 193.44 117.29 156.12 162.4 133.67 192.29 193.44"/>
+</svg>
+>>>>>>> 84a2dfd (Migrate to Claude Code semantic skills framework and fix UI issues)
+=======
+>>>>>>> 7862a55 (Add interactive logo animation playground with 6 seamless transformation algorithms)

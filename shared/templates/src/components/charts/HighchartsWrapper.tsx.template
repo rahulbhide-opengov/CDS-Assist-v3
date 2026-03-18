@@ -1,0 +1,94 @@
+import React from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { useTheme } from '@mui/material/styles';
+import { capitalDesignTokens } from '@opengov/capital-mui-theme';
+import type { Theme } from '@mui/material/styles';
+import type { Options } from 'highcharts';
+
+/** Apply CDS theme to Highcharts options. */
+function getCDSHighchartsTheme(theme: Theme): Partial<Options> {
+  const dv = capitalDesignTokens.semanticColors?.dataVisualization;
+  const colors = dv
+    ? [
+        dv.sequence700,
+        dv.sequence100,
+        dv.sequence200,
+        dv.sequence300,
+        dv.sequence400,
+        dv.sequence500,
+      ]
+    : [
+        theme.palette.primary.main,
+        theme.palette.info.main,
+        theme.palette.success.main,
+        theme.palette.warning.main,
+        theme.palette.secondary.main,
+        theme.palette.error.main,
+      ];
+
+  return {
+    colors,
+    chart: {
+      backgroundColor: 'transparent',
+      style: { fontFamily: theme.typography.fontFamily },
+    },
+    title: {
+      style: {
+        color: theme.palette.text.primary,
+        fontSize: theme.typography.h6.fontSize,
+      },
+    },
+    xAxis: {
+      labels: {
+        style: {
+          color: theme.palette.text.secondary,
+          fontSize: theme.typography.caption.fontSize,
+        },
+      },
+      gridLineColor: theme.palette.divider,
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: theme.palette.text.secondary,
+          fontSize: theme.typography.caption.fontSize,
+        },
+      },
+      gridLineColor: theme.palette.divider,
+    },
+    tooltip: {
+      backgroundColor: theme.palette.background.paper,
+      borderColor: theme.palette.divider,
+      style: { color: theme.palette.text.primary },
+    },
+    legend: {
+      itemStyle: { color: theme.palette.text.primary },
+    },
+  };
+}
+
+interface HighchartsWrapperProps {
+  options: Options;
+  containerProps?: React.HTMLAttributes<HTMLDivElement>;
+}
+
+/** Highcharts wrapper with CDS theme applied. Theme tokens only. */
+export const HighchartsWrapper: React.FC<HighchartsWrapperProps> = ({
+  options,
+  containerProps,
+}) => {
+  const theme = useTheme();
+  const themedOptions: Options = {
+    ...getCDSHighchartsTheme(theme),
+    ...options,
+  };
+
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={themedOptions}
+      containerProps={containerProps}
+    />
+  );
+};

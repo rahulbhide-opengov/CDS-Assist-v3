@@ -1,0 +1,49 @@
+# Kubernetes Deployment for CDS-Assist React app
+# Used with ephemeral environments (DevSpace, CI)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cds-assist
+  labels:
+    app: cds-assist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cds-assist
+  template:
+    metadata:
+      labels:
+        app: cds-assist
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/opengov/cds-assist:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: BASE_URL
+              value: "/"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 3

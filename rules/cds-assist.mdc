@@ -52,7 +52,16 @@ All paths below are relative to `__CDS_ASSIST_HOME__/`.
 5. **Ongoing sessions** — Once references are loaded in a session, they stay loaded. Don't re-read them on every turn.
 
 ## Identity
-AI design-and-code engine for OpenGov. Generates Figma designs and/or React code using CDS Design System.
+AI design-and-code engine for OpenGov. Generates Figma designs and/or React code using the CDS Design System.
+
+## Dual Platform
+- **Cursor**: `.cursor/rules/` + SKILL.md
+- **Claude Code**: `.claude/agents/` + `.claude/skills/` + `.claude/commands/`
+
+## Semantic Skills (13 total)
+- **Core (2)**: cds-component-hierarchy, cds-core-principles
+- **Domain (7)**: cds-accessibility, cds-architecture, cds-business-logic, cds-copywriting, cds-figma-integration, cds-routing-patterns, cds-theme-system
+- **Patterns (4)**: dashboard-pattern, list-view-pattern, form-pattern, detail-view-pattern
 
 ## CDS Design System Quick Reference
 - Primary: #4b3fff (Blurple), Secondary: #546574 (Slate)
@@ -66,15 +75,14 @@ AI design-and-code engine for OpenGov. Generates Figma designs and/or React code
 ## Mandatory Rules
 - CDSPageHeader on every page
 - No hardcoded colors/spacing/font sizes — theme tokens only
-- CDS is **light mode only** — no dark mode support
+- CDS supports **light + dark mode** (theme.palette.mode, shared/tokens/colors-dark.ts)
 - Font is ALWAYS **DM Sans**
 - Spacing ALWAYS on **4px grid**
 - **Figma canvas safety**: NEVER delete/move existing top-level screen frames. Scan page first, place new screens to the RIGHT with 200px gap. (Inside a screen you're building, freely manage child elements.)
 - **Global Navigation on EVERY screen**: Every screen MUST start with a `Global Navigation` instance (`layoutSizingHorizontal = 'FILL'`). Use the **suite-specific Product variant** when one exists (Procurement, B&P, Utility Billing, Asset Management, Agents Studio, Vendor Portal, Command Center); else use Default (key `c24369659d8f75ec3815d2d3ffb1342dd7e551b5`). All breakpoints. No exceptions.
-- **PSP Menu on EVERY screen**: The Platform Side Panel (PSP) Menu must be present on every design. **Desktop**: visible 320px left sidebar with Entity, Action Hubs, Products, Capabilities, Preferences — highlight the current product. **Tablet/Mobile**: hidden behind the hamburger menu icon in Global Nav. Component key: `16da480901ce5bdd694aa97596f7f6bd3eddff32`.
 - **Page Heading from library**: NEVER hand-build page headers. Always use the `Page Heading` component (set key `ed8d390034cdc9b76fc11e1e2647856ff734d33d`). Set `layoutSizingHorizontal = 'FILL'`, use `Small Screen: True` for tablet/mobile.
 - **Content parity across breakpoints**: ALL breakpoints MUST contain the same data and content sections. Never drop, truncate, or omit content for smaller screens. Adapt the **layout** only.
-- **Global Nav + PSP + Page Heading = mandatory trio**: No screen is complete without all three. Every page, every breakpoint.
+- **Global Nav + Page Heading = mandatory on every screen**: No screen is complete without both.
 
 ## MUI Component Rules (CRITICAL)
 Theme covers 70+ components with all semantic colors. Use props, not manual sx.
@@ -90,7 +98,10 @@ Theme covers 70+ components with all semantic colors. Use props, not manual sx.
 - **Dialog/Accordion**: use subcomponents as-is
 - Page components = **ZERO direct token imports**. Use palette paths only.
 - sx for **layout only**: display, flex, gap, p/m, width, position, textAlign
-- **Charts**: `useTheme()` + `capitalDesignTokens.semanticColors.dataVisualization` for colors. `theme.palette.divider` for grid. `theme.typography.caption.fontSize` for axis text.
+- **Charts**: recharts (simple) + Highcharts (gantt, heatmap, treemap). Both use `capitalDesignTokens` + `useTheme()`.
+- **Forms**: react-hook-form + yup (typed schemas, field/form errors, unsaved guard).
+- **State**: zustand for global state (dashboard, preferences, theme).
+- **Rich text**: TipTap for description/notes fields (CDS-styled toolbar).
 - **`import type`**: ALWAYS for type-only imports. Missing this = blank page, zero console errors.
 
 ## Figma Library Architecture
@@ -100,6 +111,12 @@ Theme covers 70+ components with all semantic colors. Use props, not manual sx.
 | **CDS 37 Patterns** | `ovXZlZTFwlNBTISlap4s4p` | 29 page-level patterns |
 | **CDS 37 Icons** | `xaElUstGXrXTsCRKp2IOhF` | 567 icons |
 | **Agents** | `x2US3gmKKjSeby3troKJRa` | Product reference file |
+
+## Tooling
+- **Code Connect**: figma.config.json, *.figma.tsx — "View code" in Figma
+- **Storybook**: CDS theme, A11y addon, autodocs
+- **Testing**: Vitest (unit), Playwright (E2E)
+- **Deploy**: Docker multi-stage, DevSpace, K8s (ee-deploy/), GitHub Actions
 
 ## Paths (resolved at install time)
 - Skill: `__CDS_ASSIST_HOME__/SKILL.md`

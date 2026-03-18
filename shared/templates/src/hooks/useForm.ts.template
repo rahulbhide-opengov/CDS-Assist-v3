@@ -1,0 +1,47 @@
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+/**
+ * Example schema — customize for your form.
+ * Use yupResolver(schema) with useForm for validation.
+ */
+const schema = yup.object({
+  name: yup.string().required('Name is required').max(100),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  description: yup.string().max(500),
+  status: yup.string().oneOf(['draft', 'active', 'archived']),
+});
+
+export type FormData = yup.InferType<typeof schema>;
+
+/**
+ * Usage in component:
+ *
+ * const {
+ *   register,
+ *   handleSubmit,
+ *   formState: { errors, isDirty, isSubmitting },
+ * } = useForm<FormData>({
+ *   resolver: yupResolver(schema),
+ *   defaultValues: {
+ *     name: '',
+ *     email: '',
+ *     description: '',
+ *     status: 'draft',
+ *   },
+ * });
+ *
+ * const onSubmit = (data: FormData) => { ... };
+ *
+ * <form onSubmit={handleSubmit(onSubmit)}>
+ *   <TextField
+ *     label="Name"
+ *     {...register('name')}
+ *     error={!!errors.name}
+ *     helperText={errors.name?.message}
+ *   />
+ * </form>
+ */
+export { useForm, yupResolver };
+export type { FormData as ExampleFormData };

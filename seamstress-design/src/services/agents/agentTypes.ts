@@ -1,0 +1,312 @@
+import { cdsColors } from '../../theme/cds';
+
+export interface AgentType {
+  id: string;
+  name: string;
+  description: string;
+  icon?: string;
+  color: string;
+  capabilities: string[];
+  suggestedQuestions: string[];
+}
+
+export const AGENT_TYPES: Record<string, AgentType> = {
+  budget: {
+    id: 'budget',
+    name: 'Budget & Planning Agent',
+    description: 'Advanced financial analysis, scenario planning, and budget optimization',
+    color: cdsColors.blurple700,
+    capabilities: [
+      'Scenario planning and modeling',
+      'Budget vs. actuals variance analysis',
+      'Department performance tracking',
+      'Vendor payment analysis',
+      'Revenue and expense forecasting',
+      'Pro-rated budget comparisons',
+      'Fund type analysis',
+      'Drill-down reporting',
+      'Trend analysis and projections',
+      'Risk assessment and alerts',
+    ],
+    suggestedQuestions: [
+      'Model a 10% tax revenue decrease scenario',
+      'Show departments over budget with variance analysis',
+      'Compare budget vs actuals with pro-rated variance',
+      'Analyze vendor payments by fund type',
+      'Which departments are trending over budget?',
+      'Calculate year-end projections based on burn rate',
+      'Show top variances with drill-down options',
+      'Generate executive budget dashboard',
+    ],
+  },
+  forms: {
+    id: 'forms',
+    name: 'Forms Agent',
+    description: 'Form completion assistance and document management',
+    color: cdsColors.green600,
+    capabilities: [
+      'Form completion guidance',
+      'Document validation',
+      'Deadline tracking',
+      'Compliance checking',
+      'Auto-fill assistance',
+    ],
+    suggestedQuestions: [
+      'Help me complete the budget proposal form',
+      'What forms are due this month?',
+      'Check my form for compliance issues',
+      'Show me required documents for this application',
+    ],
+  },
+  reporting: {
+    id: 'reporting',
+    name: 'Reporting Agent',
+    description: 'Custom reports, data visualization, and analytics',
+    color: cdsColors.red600,
+    capabilities: [
+      'Custom report generation',
+      'Data visualization',
+      'Export to multiple formats',
+      'Dashboard creation',
+      'Scheduled reports',
+    ],
+    suggestedQuestions: [
+      'Create a monthly performance report',
+      'Export department data to Excel',
+      'Build a dashboard for key metrics',
+      'Schedule weekly status reports',
+    ],
+  },
+  permitting: {
+    id: 'permitting',
+    name: 'Permitting Agent',
+    description: 'Permit applications, tracking, and compliance',
+    color: cdsColors.slate700,
+    capabilities: [
+      'Permit application assistance',
+      'Status tracking',
+      'Requirements checklist',
+      'Document submission',
+      'Inspection scheduling',
+    ],
+    suggestedQuestions: [
+      'Start a building permit application',
+      'Check my permit status',
+      'What documents do I need for a business license?',
+      'Schedule an inspection',
+    ],
+  },
+  hr: {
+    id: 'hr',
+    name: 'HR Agent',
+    description: 'Employee services, benefits, and policy information',
+    color: cdsColors.orange600,
+    capabilities: [
+      'Benefits information',
+      'Policy lookup',
+      'Time-off requests',
+      'Onboarding assistance',
+      'Training resources',
+    ],
+    suggestedQuestions: [
+      'Explain my health insurance options',
+      'How do I request time off?',
+      'What is the remote work policy?',
+      'Show me required training courses',
+    ],
+  },
+  general: {
+    id: 'general',
+    name: 'General Assistant',
+    description: 'General inquiries and cross-functional support',
+    color: cdsColors.gray700,
+    capabilities: [
+      'General information',
+      'Process guidance',
+      'Contact lookup',
+      'FAQ assistance',
+      'Multi-department queries',
+    ],
+    suggestedQuestions: [
+      'Who do I contact about...?',
+      'How do I submit a request?',
+      'What are the office hours?',
+      'Where can I find...?',
+    ],
+  },
+  eamScheduler: {
+    id: 'eamScheduler',
+    name: 'Work Scheduler',
+    description: 'AI-powered maintenance task scheduling and crew assignment',
+    color: cdsColors.orange600,
+    capabilities: [
+      'Prioritize maintenance tasks',
+      'Analyze crew availability',
+      'Optimize work schedules',
+      'Resolve scheduling conflicts',
+      'Assign equipment and resources',
+      'Generate work orders',
+      'Send crew notifications',
+      'Track completion status',
+    ],
+    suggestedQuestions: [
+      'Schedule this week\'s maintenance tasks',
+      'Show me unscheduled high-priority work',
+      'Which crews are available today?',
+      'Optimize tomorrow\'s schedule',
+      'Handle emergency repair scheduling',
+      'Review crew capacity for next week',
+      'Reschedule conflicting tasks',
+      'Generate work orders for today',
+    ],
+  },
+  inspection: {
+    id: 'inspection',
+    name: 'Inspection Scheduler',
+    description: 'Read-only inspection scheduling assistant for Permitting & Licensing',
+    color: cdsColors.blue600,
+    capabilities: [
+      'Check inspector availability',
+      'View inspector capacity and workload',
+      'Summarize daily inspections',
+      'Review checklist completion status',
+      'Search inspection history by location',
+      'View upcoming scheduled inspections',
+      'Analyze community-wide inspection metrics',
+      'Provide scheduling recommendations',
+    ],
+    suggestedQuestions: [
+      'Who is available for electrical inspections this week?',
+      'Which inspector has the most availability?',
+      'Summarize Garcia\'s inspections from yesterday',
+      'How many checklist items are still open?',
+      'Show inspections at 123 Main St',
+      'What inspections are scheduled for Thursday?',
+      'Show community inspection status',
+      'Review inspector capacity for next week',
+    ],
+  },
+  buildingCode: {
+    id: 'buildingCode',
+    name: 'Building Code Assistant',
+    description: 'Expert guidance on residential building codes, permits, and construction requirements',
+    color: cdsColors.orange600,
+    capabilities: [
+      'Answer building code questions',
+      'Explain permit requirements',
+      'Cite specific code sections',
+      'Calculate setback requirements',
+      'Determine inspection schedules',
+      'Validate material specifications',
+      'Pre-fill permit applications',
+      'Provide construction guidance',
+    ],
+    suggestedQuestions: [
+      'I want to build a deck in my backyard',
+      'Do I need a permit for a shed?',
+      'What are the setback requirements for a deck?',
+      'What inspections do I need for deck construction?',
+      'What materials are approved for outdoor decking?',
+      'Help me start a permit application',
+      'How close can I build to my property line?',
+      'What size shed can I build without a permit?',
+    ],
+  },
+  buildingCodeGenUX: {
+    id: 'buildingCodeGenUX',
+    name: 'Building Code Assistant - Gen UX',
+    description: 'Interactive building code guidance with dynamic UI components and visual tools',
+    color: cdsColors.orange600,
+    capabilities: [
+      'Interactive project configurator',
+      'Visual permit requirement checker',
+      'Dynamic code section explorer',
+      'Interactive setback calculator',
+      'Visual inspection scheduler',
+      'Material comparison tool',
+      'Guided permit application builder',
+      'Real-time cost estimator',
+    ],
+    suggestedQuestions: [
+      'I want to build a deck in my backyard',
+      'Do I need a permit for a shed?',
+      'What are the setback requirements for a deck?',
+      'What inspections do I need for deck construction?',
+      'What materials are approved for outdoor decking?',
+      'Help me start a permit application',
+      'How close can I build to my property line?',
+      'What size shed can I build without a permit?',
+    ],
+  },
+  eamDashboard: {
+    id: 'eamDashboard',
+    name: 'EAM Dashboard Assistant',
+    description: 'AI-powered dashboard assistant for Enterprise Asset Management operations',
+    color: cdsColors.blue600,
+    capabilities: [
+      'Dynamic visualization generation',
+      'Work order analysis and insights',
+      'Status breakdown and trends',
+      'Priority and overdue monitoring',
+      'Geographic work order mapping',
+      'Custom dashboard widgets',
+      'Real-time data queries',
+      'Operational recommendations',
+    ],
+    suggestedQuestions: [
+      'I need to understand our work order situation',
+      'Show me work orders by status',
+      'What about completion trends over time?',
+      'Are there any high priority items overdue?',
+      'Where are most of our open work orders located?',
+      'Show me work orders by asset type',
+      'What is our average completion time?',
+      'Give me an operations overview',
+    ],
+  },
+  documentBuilder: {
+    id: 'documentBuilder',
+    name: 'Document Builder Assistant',
+    description: 'AI-powered procurement document creation and section management',
+    color: cdsColors.blurple700,
+    capabilities: [
+      'Analyze document structure',
+      'Suggest missing sections',
+      'Generate section content',
+      'Insert procurement variables',
+      'Review document completeness',
+    ],
+    suggestedQuestions: [
+      'Help me build this document',
+      'What sections am I missing?',
+      'Add a Scope of Work section',
+      'Generate evaluation criteria',
+    ],
+  },
+  documentBuilderSimple: {
+    id: 'documentBuilderSimple',
+    name: 'Document Builder Assistant (Simple)',
+    description: 'Plain text document content generation with copy/paste workflow',
+    color: cdsColors.blurple700,
+    capabilities: [
+      'Analyze document structure',
+      'Generate section content as plain text',
+      'Provide copyable content for manual paste',
+      'Guide document completion workflow',
+    ],
+    suggestedQuestions: [
+      'Help me build this document',
+      'What sections am I missing?',
+      'Generate a Scope of Work',
+      'Create evaluation criteria',
+    ],
+  },
+};
+
+export function getAgentById(id: string): AgentType | undefined {
+  return AGENT_TYPES[id];
+}
+
+export function getAllAgents(): AgentType[] {
+  return Object.values(AGENT_TYPES);
+}

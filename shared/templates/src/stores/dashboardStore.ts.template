@@ -1,0 +1,46 @@
+import { create } from 'zustand';
+
+interface MetricData {
+  id: string;
+  label: string;
+  value: number;
+  change?: number;
+  changeLabel?: string;
+}
+
+interface DashboardState {
+  metrics: MetricData[];
+  loading: boolean;
+  error: string | null;
+  dateRange: { from: Date; to: Date };
+  setDateRange: (range: { from: Date; to: Date }) => void;
+  fetchMetrics: () => Promise<void>;
+  refresh: () => Promise<void>;
+}
+
+export const useDashboardStore = create<DashboardState>((set, get) => ({
+  metrics: [],
+  loading: false,
+  error: null,
+  dateRange: {
+    from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    to: new Date(),
+  },
+  setDateRange: (range) => set({ dateRange: range }),
+  fetchMetrics: async () => {
+    set({ loading: true, error: null });
+    try {
+      // Replace with actual API call
+      const metrics: MetricData[] = [];
+      set({ metrics, loading: false });
+    } catch (err) {
+      set({
+        error: err instanceof Error ? err.message : 'Failed to load metrics',
+        loading: false,
+      });
+    }
+  },
+  refresh: async () => {
+    await get().fetchMetrics();
+  },
+}));

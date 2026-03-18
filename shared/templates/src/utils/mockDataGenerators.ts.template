@@ -1,0 +1,111 @@
+import { faker } from '@faker-js/faker';
+
+faker.seed(123); // Consistent results during dev
+
+/** Generate a prefixed unique ID. */
+export function generateId(prefix: string): string {
+  return `${prefix}-${faker.string.nanoid(8)}`;
+}
+
+/** Generate a work order with optional overrides. */
+export function generateWorkOrder(overrides?: Partial<WorkOrder>) {
+  const status = faker.helpers.arrayElement(['Open', 'In Progress', 'Completed', 'On Hold']);
+  return {
+    id: generateId('WO'),
+    title: faker.lorem.sentence(4),
+    description: faker.lorem.paragraph(),
+    status,
+    priority: faker.helpers.arrayElement(['Low', 'Medium', 'High', 'Critical']),
+    dueDate: faker.date.future(),
+    createdAt: faker.date.past(),
+    assignee: faker.person.fullName(),
+    ...overrides,
+  };
+}
+
+/** Generate a permit with optional overrides. */
+export function generatePermit(overrides?: Partial<Permit>) {
+  const status = faker.helpers.arrayElement(['Draft', 'Submitted', 'In Review', 'Approved', 'Denied']);
+  return {
+    id: generateId('PER'),
+    permitNumber: faker.string.alphanumeric(8).toUpperCase(),
+    type: faker.helpers.arrayElement(['Building', 'Electrical', 'Plumbing', 'Land Use']),
+    status,
+    applicant: faker.person.fullName(),
+    submittedAt: faker.date.past(),
+    expiresAt: faker.date.future(),
+    ...overrides,
+  };
+}
+
+/** Generate a vendor with optional overrides. */
+export function generateVendor(overrides?: Partial<Vendor>) {
+  return {
+    id: generateId('VEN'),
+    name: faker.company.name(),
+    contact: faker.person.fullName(),
+    email: faker.internet.email(),
+    phone: faker.phone.number(),
+    status: faker.helpers.arrayElement(['Active', 'Inactive', 'Pending']),
+    ...overrides,
+  };
+}
+
+/** Generate a budget line item with optional overrides. */
+export function generateBudgetLineItem(overrides?: Partial<BudgetLineItem>) {
+  return {
+    id: generateId('BL'),
+    code: faker.string.alphanumeric(6).toUpperCase(),
+    description: faker.commerce.productName(),
+    budgeted: faker.number.float({ min: 1000, max: 100000, fractionDigits: 2 }),
+    actual: faker.number.float({ min: 0, max: 100000, fractionDigits: 2 }),
+    variance: 0,
+    ...overrides,
+  };
+}
+
+/** Bulk generate entities. */
+export function generateBulk<T>(
+  generator: (overrides?: Partial<T>) => T,
+  count: number,
+  overrides?: Partial<T>
+): T[] {
+  return Array.from({ length: count }, () => generator(overrides));
+}
+
+// Type placeholders — replace with your domain types
+interface WorkOrder {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
+  dueDate: Date;
+  createdAt: Date;
+  assignee: string;
+}
+interface Permit {
+  id: string;
+  permitNumber: string;
+  type: string;
+  status: string;
+  applicant: string;
+  submittedAt: Date;
+  expiresAt: Date;
+}
+interface Vendor {
+  id: string;
+  name: string;
+  contact: string;
+  email: string;
+  phone: string;
+  status: string;
+}
+interface BudgetLineItem {
+  id: string;
+  code: string;
+  description: string;
+  budgeted: number;
+  actual: number;
+  variance: number;
+}

@@ -1,0 +1,43 @@
+# DevSpace configuration for ephemeral environments
+# https://devspace.sh/docs/getting-started/configuration
+
+name: cds-assist
+
+vars:
+  NAMESPACE: cds-assist-ee
+  IMAGE_TAG: latest
+
+images:
+  app:
+    image: ghcr.io/${GITHUB_REPOSITORY:-opengov/cds-assist}:${IMAGE_TAG}
+    dockerfile: ./Dockerfile
+    context: .
+    build:
+      docker:
+        options:
+          buildArgs:
+            - NODE_ENV=production
+
+deployments:
+  - name: app
+    kubectl:
+      manifests:
+        - ee-deploy/deploy.yaml
+        - ee-deploy/service.yaml
+        - ee-deploy/ingress.yaml
+
+dev:
+  - name: app
+    imageSelector: app
+    devImage: node:20-alpine
+    command: ["npm", "run", "dev"]
+    sync:
+      - path: ./src
+        exclude:
+          - node_modules
+      - path: ./public
+    ports:
+      - port: 5173
+        forward: true
+    open:
+      - url: http://localhost:5173
