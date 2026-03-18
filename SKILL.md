@@ -426,9 +426,10 @@ These rules exist because assumptions caused repeated failures: wrong layout hie
 #### React Execution (mandatory in order):
   1. **Load reference**: Read `references/react-codegen.md` — the complete React code generation bible. Follow it exactly.
   2. **Component hierarchy**: CDS components first (`@opengov/components-*`) → MUI with CDS theme → custom with CDS tokens. Never skip a tier.
-  3. **Form vs state check**: If building a form → use `react-hook-form` + `yup` (typed schemas, field-level errors via `helperText`, form-level via `Alert`, unsaved changes guard). If global state needed → use `zustand` (typed stores, async actions; template in `shared/templates/src/stores/`).
-  4. **Create mock data**: Create `src/data/[suite]Data.ts` with typed interfaces, or use `@faker-js/faker` with seeded generators (factory functions per entity, `generateBulk<T>()` for batch; template in `shared/templates/src/utils/mockDataGenerators.ts`). Status colors use semantic palette keys (`'info'`, `'success'`), never hex. Export typed constants.
-  5. **Create page component**: Every page MUST have all three layers:
+  3. **Seamstress-first (this workspace)**: When working in this repo, prefer reusing existing Seamstress patterns/components/layouts. Study at least one existing page in `seamstress-design/src/pages/` that matches the pattern and mirror its layout, data hooks, and navigation wrappers. Prefer importing shared components/utilities already in `seamstress-design/src/components/` before writing new ones.
+  4. **Form vs state check**: If building a form → use `react-hook-form` + `yup` (typed schemas, field-level errors via `helperText`, form-level via `Alert`, unsaved changes guard). If global state needed → use `zustand` (typed stores, async actions; template in `shared/templates/src/stores/`).
+  5. **Create mock data**: Create `src/data/[suite]Data.ts` with typed interfaces, or use `@faker-js/faker` with seeded generators (factory functions per entity, `generateBulk<T>()` for batch; template in `shared/templates/src/utils/mockDataGenerators.ts`). Status colors use semantic palette keys (`'info'`, `'success'`), never hex. Export typed constants.
+  6. **Create page component**: Every page MUST have all three layers:
      - **Layer 1**: Layout wrapper (provides navigation bar)
      - **Layer 2**: `PageHeaderComposable` from `@opengov/components-page-header` (never hand-built)
      - **Layer 3**: Content area with `maxWidth: capitalDesignTokens.foundations.layout.breakpoints.desktop.wide`

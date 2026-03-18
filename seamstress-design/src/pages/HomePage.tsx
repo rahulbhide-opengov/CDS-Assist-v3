@@ -11,6 +11,10 @@ import {
   Button,
   Stack,
   Chip,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
   useTheme,
   alpha,
 } from '@mui/material';
@@ -215,6 +219,29 @@ export default function HomePage() {
     };
   }, [githubPRs]);
 
+  // Top branches snapshot
+  const topBranches = React.useMemo(() => {
+    if (!githubBranches) return [];
+    return githubBranches.slice(0, 6).map((b) => ({
+      name: b.name,
+      status: b.status ?? 'unknown',
+      ahead: b.aheadBy ?? 0,
+      behind: b.behindBy ?? 0,
+    }));
+  }, [githubBranches]);
+
+  // Local worktree history snapshot
+  const worktreeHistory = React.useMemo(() => {
+    if (!worktrees) return [];
+    return worktrees.slice(0, 6).map((wt) => ({
+      branch: wt.branch,
+      path: wt.path,
+      commit: wt.commit,
+      lastAccessed: wt.lastAccessed,
+      isMain: wt.isMain,
+    }));
+  }, [worktrees]);
+
   // Handle refresh
   const handleRefresh = () => {
     queryClient.invalidateQueries({ queryKey: githubKeys.all });
@@ -319,6 +346,97 @@ export default function HomePage() {
           loading={isLoading}
           onRefresh={handleRefresh}
         />
+      </Container>
+
+      {/* Branch & Project History */}
+      <Container maxWidth="lg" sx={{ py: 2 }}>
+        <Typography variant="h5" component="h2" gutterBottom fontWeight={600} sx={{ mb: 2 }}>
+          Branch & Project History
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Card variant="outlined">
+              <CardContent sx={{ p: 3 }}>
+                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+                  Branches (top 6)
+                </Typography>
+                <List dense>
+                  {topBranches.length === 0 && (
+                    <ListItem>
+                      <ListItemText primary="No branches available (configure GitHub token)" />
+                    </ListItem>
+                  )}
+                  {topBranches.map((b) => (
+                    <React.Fragment key={b.name}>
+                      <ListItem
+                        secondaryAction={
+                          <Chip
+                            label={b.status}
+                            size="small"
+                            color={
+                              b.status === 'clean'
+                                ? 'success'
+                                : b.status === 'ahead'
+                                ? 'info'
+                                : b.status === 'behind'
+                                ? 'warning'
+                                : b.status === 'diverged'
+                                ? 'error'
+                                : 'default'
+                            }
+                            variant="outlined"
+                          />
+                        }
+                      >
+                        <ListItemText
+                          primary={b.name}
+                          secondary={`↑ ${b.ahead} / ↓ ${b.behind}`}
+                        />
+                      </ListItem>
+                      <Divider component="li" />
+                    </React.Fragment>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Card variant="outlined">
+              <CardContent sx={{ p: 3 }}>
+                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+                  Local Worktrees (projects)
+                </Typography>
+                <List dense>
+                  {worktreeHistory.length === 0 && (
+                    <ListItem>
+                      <ListItemText primary="No worktrees detected" />
+                    </ListItem>
+                  )}
+                  {worktreeHistory.map((wt) => (
+                    <React.Fragment key={`${wt.path}-${wt.branch}`}>
+                      <ListItem
+                        secondaryAction={
+                          wt.isMain ? (
+                            <Chip label="main" size="small" color="primary" variant="outlined" />
+                          ) : (
+                            <Chip label="worktree" size="small" variant="outlined" />
+                          )
+                        }
+                      >
+                        <ListItemText
+                          primary={wt.branch}
+                          secondary={`${wt.path}${wt.lastAccessed ? ` — accessed ${wt.lastAccessed}` : ''}`}
+                        />
+                      </ListItem>
+                      <Divider component="li" />
+                    </React.Fragment>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       </Container>
 
       {/* Main Content */}
